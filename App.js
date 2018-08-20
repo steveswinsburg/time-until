@@ -4,11 +4,11 @@ import CountdownTimer from './components/CountdownTimer';
 
 export default class App extends React.Component {
   render() {
-    let eventDate = '2018-09-05T12:59+1000';
+    let eventDate = '2018-09-04T10:20+1000';
 
     return (
       <View style={styles.container}>
-        <CountdownTimer date={eventDate}/>
+        <CountdownTimer eventDate={eventDate}/>
       </View>
     );
   }

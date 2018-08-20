@@ -1,40 +1,29 @@
-import React, { Component } from 'react';
-import {View, Text} from 'react-native';
-import Moment from 'react-moment';
-import 'moment-timezone';
+import React, { Component } from "react";
+import { View, Text } from "react-native";
+import Moment from "react-moment";
+import "moment-timezone";
 
 export class CountdownTimer extends Component {
-  
   constructor(props) {
     super(props);
 
-    this.state = {now: new Date()};
+    //bind local functions
+    this.diff = this.diff.bind(this);
+
+    this.state = { now: new Date() };
     this.interval = null;
 
+    /*
     setInterval(() => {
       this.setState({
         now: new Date()
       });
     }, 1000);
-    
-/*
-    // Refresh every second
-    setInterval(() => {
-      this.setState(previousState => {
-        return { isShowingText: !previousState.isShowingText };
-      });
-    }, 1000);
     */
+    
   }
 
-  /*
-  getInitialState() {
-    return {
-      now: new Date(),
-    };
-    this.interval = null;
-  }
-  */
+  
 
   /*
   componentDidMount() {
@@ -44,28 +33,44 @@ export class CountdownTimer extends Component {
       });
     }, 1000);
   }
-  */
+  
 
-  /*
+  
   componentWillUnmount() {
     clearInterval(this.interval);
   }
   */
 
- componentDidMount() {
-  //this.interval = 
-}
+  diff() {
+    let now = new Date();
+    console.log(now);
+    console.log(now);
+    console.log(this.props.eventDate);
 
-  
+    console.log(<Moment diff={this.props.eventDate}>{now}</Moment>);
+
+    return (<Moment diff={this.props.eventDate}>{now}</Moment>);
+        
+  }
+
+
+
   render() {
-  
-      return (
-        <View>
-          <Text>date:</Text><Moment element={Text}>{this.props.date}</Moment> 
-          <Text>now:</Text><Moment element={Text}>{this.state.now}</Moment> 
-        </View>
-      );
-    }
+    return (
+      <View>
+        <Text>date:</Text>
+        <Moment element={Text}>{this.props.eventDate}</Moment>
+    
+
+        <Text>from now:</Text>
+        <Moment element={Text} fromNow>{this.props.eventDate}</Moment>
+
+        <Moment element={Text} >{this.diff()}</Moment>
+
+
+      </View>
+    );
+  }
 }
 
 export default CountdownTimer;
