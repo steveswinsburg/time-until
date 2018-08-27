@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from 'react-native';
 
-export class TimeUnit extends Component {
+export default class TimeUnit extends React.Component {
   
   render() {
 
@@ -44,5 +44,3 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   }
 });
-
-export default TimeUnit;
