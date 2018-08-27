@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 import TimeUnit from "../components/TimeUnit";
 import { Button, Icon } from "react-native-elements";
 
@@ -22,11 +22,12 @@ export default class HomeScreen extends React.Component {
 
     // the event
     //note format of timezone is different between react and react-native
-    this.eventDate = "2018-09-04T10:20+10:00";
-    this.eventName = "My bae gets home in";
+    //this.eventDate = "2018-09-04T10:20+10:00";
+    //this.eventName = "My bae gets home in";
   }
 
   componentDidMount() {
+    this.loadData();
     this.calculate();
     this.interval = setInterval(() => this.calculate(), 1000);
   }
@@ -35,8 +36,22 @@ export default class HomeScreen extends React.Component {
     clearInterval(this.interval);
   }
 
+  async loadData() {
+    try {
+      const n = await AsyncStorage.getItem("@TimeUntil:eventName");
+      const d = await AsyncStorage.getItem("@TimeUntil:eventDate");
+      this.setState({
+        eventName: n,
+        eventDate: d
+      });
+    } catch (error) {
+      console.error("Error retrieving data", error);
+      alert("Error retrieving data");
+    }
+  }
+
   calculate() {
-    let event = new Date(this.eventDate);
+    let event = new Date(this.state.eventDate);
     let now = new Date();
 
     let diff = new Date(event - now).getTime();
@@ -80,7 +95,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View>
-          <Text style={styles.eventName}>{this.eventName}</Text>
+          <Text style={styles.eventName}>{this.state.eventName}</Text>
         </View>
 
         <View style={styles.eventTime}>
